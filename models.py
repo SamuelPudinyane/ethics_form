@@ -62,6 +62,8 @@ class User(Base):
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
     supervisor_id = Column(String(255), nullable=True)
+    staff_number=Column(String(255),nullable=True)
+    specialisation=Column(String(255),nullable=True)
     role = Column(Enum(UserRole), nullable=False, default=UserRole.STUDENT)
     reset_token = Column(String, nullable=True)
     reset_token_expiry = Column(DateTime, nullable=True)
@@ -70,12 +72,14 @@ class User(Base):
     form_c = relationship("FormC", backref="user", lazy=True)
     form_a_requirements = relationship("FormARequirements", backref="user", lazy=True)
 
-    def __init__(self, full_name, student_number, email, password, supervisor_id, role):
+    def __init__(self, full_name, student_number=None, email=None,staff_number=None,specialisation=None, password=None, supervisor_id=None, role=None):
         self.full_name = full_name
         self.student_number = student_number
         self.email = email
+        self.staff_number=staff_number
         self.password = self.hash_password(password)
         self.supervisor_id = supervisor_id
+        self.specialisation=specialisation
         self.role = UserRole(role) if isinstance(role, str) else role
 
     @staticmethod
@@ -102,6 +106,8 @@ class User(Base):
             "student_number": self.student_number,
             "email": self.email,
             "supervisor_id": self.supervisor_id,
+            "staff_number":self.staff_number,
+            "specialisation":self.specialisation,
             "role": self.role.value
         }
 
@@ -154,6 +160,7 @@ class FormARequirements(Base):
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
+    form_type = Column(String, nullable=False)
     needs_permission = Column(Boolean,default=False, nullable=True)
     permission_letter = Column(String(255), nullable=True)
     has_clearance = Column(Boolean,default=False, nullable=True)
@@ -168,9 +175,10 @@ class FormARequirements(Base):
     impact_assessment_path = Column(String(255), nullable=True)
     has_ethics_evidence=Column(Boolean,default=False,nullable=True)
     ethics_evidence = Column(Boolean, default=False, nullable=True)
+    files = Column(Text, nullable=True)  # Will store JSON list containing id's of files
     submitted_at = Column(DateTime, server_default=func.now(), nullable=False)
-
-
+    updated_at = Column(DateTime, server_default=func.now(), nullable=False)
+    
 
 class FormA(Base):
     __tablename__ = 'form_a'
@@ -280,7 +288,7 @@ class FormA(Base):
 
     # 5.3 - Participant details
     participants_description = Column(Text)
-    duration_timing = Column(Text)
+    duration_timing = Column(DateTime,server_default=func.now(),nullable=True)
     contact_details_method = Column(Text)
     conflict_interest = Column(Boolean,default=False)
     conflict_explanation = Column(Text)
