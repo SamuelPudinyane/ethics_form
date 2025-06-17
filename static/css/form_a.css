@@ -32,15 +32,21 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    justify-content: space-between;
   }
-  .logo.uj {
-    height: 60px;
-  }
-  .nav-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    align-items: center;
-  }
+ 
+  .logo {
+  height: 60px;
+  object-fit: contain;
+  margin-left: auto;
+}
+
+.nav-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+  align-items: center;
+}
   
   /* Progress Bar */
   .progress-bar-container {
@@ -90,6 +96,7 @@
     display: block;
     margin-top: 1rem;
     font-weight: bold;
+    font-size: 25px;
   }
 
   .form-navigation {
@@ -100,7 +107,7 @@
   
   /* Main content styling */
   .main-content {
-    max-width: 900px;
+    max-width: 1700px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: var(--white);
@@ -114,6 +121,7 @@
     display: block;
     font-weight: bold;
     margin-top: 1.5rem;
+    font-size: 25px;
   }
   input[type="text"],
   input[type="email"],
@@ -204,8 +212,7 @@
     .btn-logout {
       display: inline-block;
       padding: 12px 24px;
-      background-color: #CE0F46;
-      /* JBS Deep Pink */
+      background-color: #F26522;
       color: white;
       text-decoration: none;
       font-weight: bold;

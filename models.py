@@ -160,7 +160,7 @@ class FormARequirements(Base):
     
     id = Column(String(150), primary_key=True, default=generate_uuid)
     user_id = Column(String(255),ForeignKey("users.user_id"), nullable=True)  # Link to user who submitted
-    form_type = Column(String, nullable=False)
+    form_type = Column(String, nullable=True)
     needs_permission = Column(Boolean,default=False, nullable=True)
     permission_letter = Column(String(255), nullable=True)
     has_clearance = Column(Boolean,default=False, nullable=True)
