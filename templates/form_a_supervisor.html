@@ -649,7 +649,12 @@
         </label>
     
           <label>Please upload the permission for use of private data:</label>
-          <br><a href="{{url_for('static',filename=formA.private_permission_file)}}" target="_blank">View Document</a>
+          <br>{% if formA.private_permission_file %}
+  <br><a href="{{ url_for('static', filename=formA.private_permission_file) }}" target="_blank">View Document</a>
+{% else %}
+  <p>No document uploaded.</p>
+{% endif %}
+
         
       <!-- Public Data Section -->
         <label>What type of public data is going to be used?</label>
